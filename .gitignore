@@ -1,3 +1,9 @@
 .ipynb_checkpoints
 dist/
 masdse203_rdb_to_semi.egg-info/
+
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
