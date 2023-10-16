@@ -1,11 +1,15 @@
-"""Working with CSV files using pandas."""
-import pandas
+"""Homework 1"""
+import pandas as pd
 import json
 
-def csv_to_json(csv):
-  """Assumes database has been loaded into a CSV, then transforms into a python dictionary."""
-  df = pandas.read_csv(csv)
-  results = df.to_json(orient='records')
-  parsed = json.loads(results)
-  return parsed
+def df_to_json(df):
+    """Assumes database has been loaded into a df, then transforms into a JSON file."""
+    if not isinstance(df, pd.DataFrame):
+        raise ValueError("Expected a DataFrame, but received a different type.")
+    
+    print(df.dtypes)
+
+    results = df.to_json(orient='records')
+    parsed = json.loads(results)
+    return parsed
   
