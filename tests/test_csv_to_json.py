@@ -24,13 +24,14 @@ def test_simple_data_csv_df(one_table, one_table_result):
 
 @pytest.fixture
 def two_tables():
-    df1 = pd.read_csv('tests/data/two_tables/df_doc.csv')
-    df2 = pd.read_csv('tests/data/two_tables/df_topic.csv')
+    df1 = pd.read_csv('tests/data/two_tables/df_topic.csv')
+    df2 = pd.read_csv('tests/data/two_tables/df_doc.csv')
     return df1, df2
 
 def test_two_tables(two_tables):
     df1, df2 = two_tables
+    schema = pd.read_csv('tests/data/two_tables/schema.csv')
     with pytest.raises(ValueError):
-        df_to_json(df1, df2)
+        df_to_json(df1, df2, db_schema = schema)
 
 
