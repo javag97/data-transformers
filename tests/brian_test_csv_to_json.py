@@ -6,12 +6,12 @@ import json
 
 @pytest.fixture
 def one_table():
-    df = pd.read_csv('tests/data/one_table/table.csv')
+    df = pd.read_csv('C:/Users/brian/Documents/data-transformers/tests/data/one_table/table.csv')
     return df
 
 @pytest.fixture
 def one_table_result():
-    with open('tests/data/one_table/result.json', 'r') as json_file:
+    with open('C:/Users/brian/Documents/data-transformers/tests/data/one_table/result.json', 'r') as json_file:
         data = json.load(json_file)
     return data
 
@@ -24,13 +24,13 @@ def test_simple_data_csv_df(one_table, one_table_result):
 
 @pytest.fixture
 def two_tables():
-    df1 = pd.read_csv('tests/data/two_tables/df_topic.csv')
-    df2 = pd.read_csv("tests/data/two_tables/df_doc.csv")
+    df1 = pd.read_csv('C:/Users/brian/Documents/data-transformers/tests/data/two_tables/df_topic.csv')
+    df2 = pd.read_csv("C:/Users/brian/Documents/data-transformers/tests/data/two_tables/df_doc.csv")
     return df1, df2
 
-def test_two_tables(two_tables):
+def test_two_tables(two_tables)::
     df1, df2 = two_tables
-    schema = pd.read_csv('tests/data/two_tables/schema.csv')
+    schema = pd.read_csv('C:/Users/brian/Documents/data-transformers/tests/data/two_tables/schema.csv')
     #with pytest.raises(ValueError):
     end = df_to_json(df1, df2, db_schema = schema)
     return end

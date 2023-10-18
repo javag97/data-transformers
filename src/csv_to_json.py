@@ -69,6 +69,10 @@ def df_to_json(*args, db_schema=None):
                     .to_json(orient='records')
                    )
             parsed = json.loads(temp)
+            
+            final = json.dumps({df2_name: parsed})
+            with open("results.json", "w") as outfile: #fix: write out to results folder
+                outfile.write(final)
             return parsed
     
     if db_schema == None:
