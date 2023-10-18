@@ -15,5 +15,22 @@ def one_table_result():
         data = json.load(json_file)
     return data
 
+def test_invalid_input():
+    with pytest.raises(ValueError):
+        df_to_json('string')
+
 def test_simple_data_csv_df(one_table, one_table_result):
     assert df_to_json(one_table) == one_table_result
+
+@pytest.fixture
+def two_tables():
+    df1 = pd.read_csv('tests/data/two_tables/df_doc.csv')
+    df2 = pd.read_csv('tests/data/two_tables/df_topic.csv')
+    return df1, df2
+
+def test_two_tables(two_tables):
+    df1, df2 = two_tables
+    with pytest.raises(ValueError):
+        df_to_json(df1, df2)
+
+
