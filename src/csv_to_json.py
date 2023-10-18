@@ -37,7 +37,8 @@ def df_to_json(*args, db_schema=None):
             results = args[0].to_json(orient='records')
             parsed = json.loads(results)
             return parsed
-    
+        
+        
     if db_schema == None:
         raise ValueError("Expected a db_schema, but received None.")
 
