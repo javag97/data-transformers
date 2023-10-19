@@ -39,6 +39,18 @@ def test_two_tables_no_schema(two_tables):
     with pytest.raises(ValueError):
         df_to_json(df1, df2)
 
+def test_two_tables_bad_schema(two_tables):
+    df1, df2 = two_tables
+    schema = pd.read_csv('tests/data/two_tables/bad_schema.csv')
+    with pytest.raises(ValueError):
+        df_to_json(df1, df2, db_schema = schema)
+
+def test_two_tables_incomplete_schema(two_tables):
+    df1, df2 = two_tables
+    schema = pd.read_csv('tests/data/two_tables/incomplete_schema.csv')
+    with pytest.raises(ValueError):
+        df_to_json(df1, df2, db_schema = schema)
+
 def test_two_tables(two_tables):
     df1, df2 = two_tables
     schema = pd.read_csv('tests/data/two_tables/schema.csv')

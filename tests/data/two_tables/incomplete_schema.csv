@@ -1,0 +1,2 @@
+conname,conrelid,conrelid_file,attname,confrelid_file
+topics_fk_doc,topics,df_topic,document_id,df_doc

@@ -29,15 +29,27 @@ def valdiate_schema_csv(schema):
         bool: True if the CSV is valid, False otherwise.
     """
 
+
     expected_columns = [
-        "conname", "conrelid", "conrelid_file", "attname",
-        "confrelid_file", "confrelid",
+        "conname", "conrelid", "conrelid_file", "fk_column",
+        "confrelid_file", "confrelid", "pk_column"
     ]
 
+    missing_columns = set(expected_columns) - set(schema.columns)
+    extra_columns = set(schema.columns) - set(expected_columns)
+
+    if missing_columns or extra_columns:
+        error_message = ""
+        if missing_columns:
+            error_message += f"Missing values: {', '.join(missing_columns)}. "
+        if extra_columns:
+            error_message += f"Extra values: {', '.join(extra_columns)}"
+        raise ValueError(error_message)
+
+    if not set(schema['fk_column']).issubset(schema['pk_column']) or not set(schema['pk_column']).issubset(schema['fk_column']):
+        raise ValueError("Mismatch between foreign key and primary key columns.")
     
-    
-    
-    
+    return True    
 
 def df_to_json(*args, db_schema=None):
     """Converts one or multiple pandas DataFrames to JSON format.
@@ -67,6 +79,9 @@ def df_to_json(*args, db_schema=None):
     if db_schema is None:
         raise ValueError("Expected a db_schema, but received None.")
 
+    if not valdiate_schema_csv(db_schema):
+        return
+        # raise ValueError("Your schema is not valid.")
     
     if len(args) == 2:
         df1 = args[0]
