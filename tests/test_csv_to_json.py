@@ -28,12 +28,6 @@ def two_tables():
     df2 = pd.read_csv("tests/data/two_tables/df_doc.csv")
     return df1, df2
 
-@pytest.fixture
-def two_tables_result():
-    with open('tests/data/two_tables/results.json', 'r') as json_file:
-        data = json.load(json_file)
-    return data
-
 def test_one_table_with_schema(two_tables):
     df1, df2 = two_tables
     schema = pd.read_csv('tests/data/two_tables/schema.csv')
