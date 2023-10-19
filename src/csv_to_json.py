@@ -73,7 +73,7 @@ def df_to_json(*args, db_schema=None):
             final = json.dumps({df2_name: parsed})
             with open("results.json", "w") as outfile: #fix: write out to results folder
                 outfile.write(final)
-            return parsed
+            return final
     
     if db_schema == None:
         raise ValueError("Expected a db_schema, but received None.")

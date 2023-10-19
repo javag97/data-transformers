@@ -35,4 +35,14 @@ def test_two_tables(two_tables):
     end = df_to_json(df1, df2, db_schema = schema)
     return end
 
+@pytest.fixture
+def two_tables_result():
+    with open('tests/data/two_tables/results.json', 'r') as json_file:
+        data = json.load(json_file)
+    return data
 
+def test_simple_data_csv_df(two_tables, two_tables_result):
+    schema = pd.read_csv('tests/data/two_tables/schema.csv')
+    df1, df2 = two_tables
+    result = json.loads(df_to_json(df1, df2, db_schema=schema))
+    assert two_tables_result == two_tables_result
