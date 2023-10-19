@@ -28,11 +28,43 @@ def two_tables():
     df2 = pd.read_csv("tests/data/two_tables/df_doc.csv")
     return df1, df2
 
+def test_one_table_with_schema(two_tables):
+    df1, df2 = two_tables
+    schema = pd.read_csv('tests/data/two_tables/schema.csv')
+    with pytest.raises(ValueError):
+        df_to_json(df1, db_schema = schema)
+
+def test_two_tables_no_schema(two_tables):
+    df1, df2 = two_tables
+    with pytest.raises(ValueError):
+        df_to_json(df1, df2)
+
+def test_two_tables_bad_schema(two_tables):
+    df1, df2 = two_tables
+    schema = pd.read_csv('tests/data/two_tables/bad_schema.csv')
+    with pytest.raises(ValueError):
+        df_to_json(df1, df2, db_schema = schema)
+
+def test_two_tables_incomplete_schema(two_tables):
+    df1, df2 = two_tables
+    schema = pd.read_csv('tests/data/two_tables/incomplete_schema.csv')
+    with pytest.raises(ValueError):
+        df_to_json(df1, df2, db_schema = schema)
+
 def test_two_tables(two_tables):
     df1, df2 = two_tables
     schema = pd.read_csv('tests/data/two_tables/schema.csv')
-    #with pytest.raises(ValueError):
     end = df_to_json(df1, df2, db_schema = schema)
     return end
 
+@pytest.fixture
+def two_tables_result():
+    with open('tests/data/two_tables/results.json', 'r') as json_file:
+        data = json.load(json_file)
+    return data
 
+def test_simple_data_csv_df(two_tables, two_tables_result):
+    schema = pd.read_csv('tests/data/two_tables/schema.csv')
+    df1, df2 = two_tables
+    result = json.loads(df_to_json(df1, df2, db_schema=schema))
+    assert two_tables_result == two_tables_result
