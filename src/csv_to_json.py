@@ -117,6 +117,7 @@ def df_to_json(*args, db_schema=None):
     
     if len(args) == 2:
         parsed = merge_df(args[0], args[1], db_schema)
+        print(parsed)
         df2_name = db_schema['confrelid'][0] # Name of the referenced table.
         final = json.dumps({df2_name: parsed})
         print(final)
