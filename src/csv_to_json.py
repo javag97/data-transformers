@@ -34,10 +34,17 @@ def df_to_json(*args, db_schema=None):
         list: A list containing the JSON representation of each DataFrame.
     """
     if len(args) == 1:
+        if db_schema is not None:
+            raise ValueError("No schema needed with one table.")
+
         if is_df(args[0]):
             results = args[0].to_json(orient='records')
             parsed = json.loads(results)
             return parsed
+        
+    if db_schema is None:
+        raise ValueError("Expected a db_schema, but received None.")
+
     
     if len(args) == 2:
         if is_df(args[0]) and is_df(args[1]):

@@ -28,10 +28,20 @@ def two_tables():
     df2 = pd.read_csv("tests/data/two_tables/df_doc.csv")
     return df1, df2
 
+def test_one_table_with_schema(two_tables):
+    df1, df2 = two_tables
+    schema = pd.read_csv('tests/data/two_tables/schema.csv')
+    with pytest.raises(ValueError):
+        df_to_json(df1, db_schema = schema)
+
+def test_two_tables_no_schema(two_tables):
+    df1, df2 = two_tables
+    with pytest.raises(ValueError):
+        df_to_json(df1, df2)
+
 def test_two_tables(two_tables):
     df1, df2 = two_tables
     schema = pd.read_csv('tests/data/two_tables/schema.csv')
-    #with pytest.raises(ValueError):
     end = df_to_json(df1, df2, db_schema = schema)
     return end
 
