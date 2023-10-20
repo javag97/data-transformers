@@ -1,0 +1,50 @@
+[
+  {
+      "id": 1,
+      "name": "Alice",
+      "courses": [
+          {
+              "course_id": 101,
+              "course_name": "Math",
+              "professor": "Dr. Smith"
+          },
+          {
+              "course_id": 102,
+              "course_name": "History",
+              "professor": "Dr. Johnson"
+          }
+      ]
+  },
+  {
+      "id": 2,
+      "name": "Bob",
+      "courses": [
+          {
+              "course_id": 101,
+              "course_name": "Math",
+              "professor": "Dr. Smith"
+          },
+          {
+              "course_id": 103,
+              "course_name": "Chemistry",
+              "professor": "Dr. White"
+          }
+      ]
+  },
+  {
+      "id": 3,
+      "name": "Charlie",
+      "courses": [
+          {
+              "course_id": 102,
+              "course_name": "History",
+              "professor": "Dr. Johnson"
+          },
+          {
+              "course_id": 104,
+              "course_name": "Physics",
+              "professor": "Dr. Brown"
+          }
+      ]
+  }
+]

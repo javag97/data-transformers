@@ -16,6 +16,7 @@ def is_df(df):
         raise ValueError("Expected a DataFrame, but received a different type.")
     return True
 
+
 def validate_schema_csv(schema):
     """
     Validates the schema.csv file for its structure and content.
@@ -24,8 +25,6 @@ def validate_schema_csv(schema):
     Returns:
         bool: True if the CSV is valid, False otherwise.
     """
-
-
     expected_columns = [
         "conname", "conrelid", "conrelid_file", "fk_column",
         "confrelid_file", "confrelid", "pk_column"
@@ -41,12 +40,7 @@ def validate_schema_csv(schema):
         if extra_columns:
             error_message += f"Extra values: {', '.join(extra_columns)}"
         raise ValueError(error_message)
-
-    if not set(schema['fk_column']).issubset(schema['pk_column']) or not set(schema['pk_column']).issubset(schema['fk_column']):
-        raise ValueError("Mismatch between foreign key and primary key columns.")
-
     return True
-
 
 
 def df_to_json(*args, db_schema=None):
@@ -114,4 +108,4 @@ def df_to_json(*args, db_schema=None):
         return final
     
     return None
-    
+ 
