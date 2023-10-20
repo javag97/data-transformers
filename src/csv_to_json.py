@@ -87,8 +87,6 @@ def df_to_json(*args, db_schema=None):
         df2_name = db_schema['confrelid'][0] #name of refrenced table
 
         shared_column = db_schema['fk_column'][0] #name of the foreign key in one table
-        if shared_column != db_schema['pk_column'][0]: 
-            df2 = df2.rename(columns={db_schema['attname.1'][0]: shared_column}) #if the attnames are different, we will rename them to be the same 
 
         df1_columns = list(np.setdiff1d(df1.columns, [shared_column])) #columns in table besides shared column
         df2_columns = list(np.setdiff1d(df2.columns, [shared_column]))
