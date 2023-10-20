@@ -82,8 +82,7 @@ def df_to_json(*args, db_schema=None):
         return
     
     if len(args) == 2:
-        df1 = args[0]
-        df2 = args[1]
+        df1, df2 = args
         df1_name = db_schema['conrelid'][0] #name of table the constraint is on, foreign key
         df2_name = db_schema['confrelid'][0] #name of refrenced table
 
@@ -112,7 +111,7 @@ def df_to_json(*args, db_schema=None):
         parsed = json.loads(temp)
         
         final = json.dumps({df2_name: parsed})
-        with open("results.json", "w") as outfile: #fix: write out to results folder
+        with open("results.json", "w", encoding='utf-8') as outfile: #fix: write out to results folder
             outfile.write(final)
         return final
     
