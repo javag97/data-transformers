@@ -6,6 +6,10 @@
 pip install -i https://test.pypi.org/simple/ masdse203-rdb-to-semi
 ```
 
+```python
+from masdse203_rdb_to_semi import csv_to_json
+```
+
 https://test.pypi.org/project/masdse203-rdb-to-semi/
 
 ## Local development instructions 
