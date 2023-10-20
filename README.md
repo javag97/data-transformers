@@ -1,5 +1,13 @@
 # This project is currently in active development and is not considered stable. 
 
+## Usage 
+
+```bash
+pip install -i https://test.pypi.org/simple/ masdse203-rdb-to-semi
+```
+
+https://test.pypi.org/project/masdse203-rdb-to-semi/
+
 ## Local development instructions 
 
 * Install development dependencies: `pip install .`
@@ -17,9 +25,8 @@ from src.csv_to_json import csv_to_df
 1. `pip install twine`
 1. Optional: Upload to test registry and import test package: 
    1. Upload to test registry: `twine upload --repository-url https://test.pypi.org/legacy/ dist/*`
-   1. To test the package: `pip install --index-url https://test.pypi.org/simple/ your-package-name`
-1. `twine upload dist/*
-`
+   1. To test the package: `pip install --index-url https://test.pypi.org/simple/ masdse203-rdb-to-semi`
+1. `twine upload dist/*` for push to real registry
 
 ### Incrementing package version
 
