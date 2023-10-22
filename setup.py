@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='masdse203_rdb_to_semi',
-    version='0.1.3.alpha',
+    version='0.1.3.alpha.1',
     description='DSE 203 Relational to Semi Structured Transformation',
     author='Javier Garcia, Brian Qian',
     author_email='jag043@ucsd.edu',
