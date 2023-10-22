@@ -1,5 +1,5 @@
 import pytest
-from src.csv_to_json import df_to_json
+from src.csv.to_json import df_to_json
 import pandas as pd
 import json
 
