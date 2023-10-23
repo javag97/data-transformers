@@ -3,20 +3,25 @@
 URL to package: https://test.pypi.org/project/masdse203-rdb-to-semi/
 
 ##  Basic Usage 
-
+1. Install the rdb-to-semi PyPi package
 ```bash
 pip install -i https://test.pypi.org/simple/ masdse203-rdb-to-semi
 ```
-
+2. Import df_to_json
 ```python
 from masdse203_rdb_to_semi.to_json import df_to_json
 ```
-
+3. Different use cases
+- If you have one dataframe to convert:
+```python
+df1 = pd.read_csv('path_to.csv')
+df_to_json(df1)
+```
+- If you have two dataframes to convert include a schema file:
 ```python
 df1 = pd.read_csv('path_to.csv')
 df2 = pd.read_csv("path_to_other.csv")
-schema = pd.read_csv('schema.csv') # more docs on that below
-
+schema = pd.read_csv('schema.csv') 
 df_to_json(df1, df2, db_schema=schema)
 ```
 
@@ -30,11 +35,15 @@ If you're merging two tables together, you need to offer a schema in the form of
 |---------------|----------|-------------|-----------|-------------|
 | topics_fk_doc | topics   | document_id | documents | document_id |
 
-- conname: the name of the constraint (you can name this anything)
-- conrelid:  the name of the table the constraint is on (df1)
-- fk_column: the column of the foreign key in conrelid
-- confrelid: the name of the table being referenced (df2)
-- pk_column: the column of the primary key that is being referenced in confrelid
+1. conname: the name of the constraint (you can name this anything)
+2. conrelid:  the name of the table the constraint is on (df1)
+3. fk_column: the column of the foreign key in conrelid
+4. confrelid: the name of the table being referenced (df2)
+5. pk_column: the column of the primary key in confrelid that is being referenced
+
+#### df_to_json(df1, df2, db_schema=schema)
+- The order of df1 and df2 is important, in most cases "conrelid" should be the name of df1 and "confrelid" should be the name of df2. Thus df1 should be the dataframe with the foreign key and df2 should be the table that is being referenced
+- However, for added functionality the tables can be merged vice versa depending on the order giving the user the option to choose how they want their semistructed json file to be nested
 
 ## Local development instructions 
 
@@ -64,3 +73,4 @@ We should try to adhere to the [semantic versioning spec](https://semver.org/). 
 > MAJOR version when you make incompatible API changes
 > MINOR version when you add functionality in a backward compatible manner
 > PATCH version when you make backward compatible bug fixes
+

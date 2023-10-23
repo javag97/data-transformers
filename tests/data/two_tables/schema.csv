@@ -1,2 +1,2 @@
-conname,conrelid,conrelid_file,fk_column,confrelid_file,confrelid,pk_column
-topics_fk_doc,topics,df_topic,document_id,df_doc,documents,document_id
+conname,conrelid,fk_column,confrelid,pk_column
+topics_fk_doc,topics,document_id,documents,document_id
