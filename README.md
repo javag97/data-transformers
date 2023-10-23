@@ -3,40 +3,6 @@
 URL to package: https://test.pypi.org/project/masdse203-rdb-to-semi/
 
 ##  Basic Usage 
-
-```bash
-pip install -i https://test.pypi.org/simple/ masdse203-rdb-to-semi
-```
-
-```python
-from masdse203_rdb_to_semi.to_json import df_to_json
-```
-
-```python
-df1 = pd.read_csv('path_to.csv')
-df2 = pd.read_csv("path_to_other.csv")
-schema = pd.read_csv('schema.csv') # more docs on that below
-
-df_to_json(df1, df2, db_schema=schema)
-```
-
-## Defining the schema object
-
-If you're merging two tables together, you need to offer a schema in the form of the CSV to understand the primary/foreign key relationships between tables. This is **required**, *must* be user generated, and these tables **will not be merged without it.**
-
-### Creating the schema CSV 
-
-| conname       | conrelid | fk_column   | confrelid | pk_column   |
-|---------------|----------|-------------|-----------|-------------|
-| topics_fk_doc | topics   | document_id | documents | document_id |
-
-- conname: the name of the constraint (you can name this anything)
-- conrelid:  the name of the table the constraint is on
-- fk_column: the column of the foreign key in conrelid
-- confrelid: the name of the table being referenced 
-- pk_column: the column of the primary key in confrelid that is being referenced
-
-## Detailed Instructions
 1. Install the rdb-to-semi PyPi package
 ```bash
 pip install -i https://test.pypi.org/simple/ masdse203-rdb-to-semi
@@ -58,6 +24,22 @@ df2 = pd.read_csv("path_to_other.csv")
 schema = pd.read_csv('schema.csv') 
 df_to_json(df1, df2, db_schema=schema)
 ```
+
+## Defining the schema object
+
+If you're merging two tables together, you need to offer a schema in the form of the CSV to understand the primary/foreign key relationships between tables. This is **required**, *must* be user generated, and these tables **will not be merged without it.**
+
+### Creating the schema CSV 
+
+| conname       | conrelid | fk_column   | confrelid | pk_column   |
+|---------------|----------|-------------|-----------|-------------|
+| topics_fk_doc | topics   | document_id | documents | document_id |
+
+- conname: the name of the constraint (you can name this anything)
+- conrelid:  the name of the table the constraint is on
+- fk_column: the column of the foreign key in conrelid
+- confrelid: the name of the table being referenced 
+- pk_column: the column of the primary key in confrelid that is being referenced
 
 ## Local development instructions 
 
