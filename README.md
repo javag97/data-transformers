@@ -34,7 +34,30 @@ If you're merging two tables together, you need to offer a schema in the form of
 - conrelid:  the name of the table the constraint is on
 - fk_column: the column of the foreign key in conrelid
 - confrelid: the name of the table being referenced 
-- pk_column: the column of the primary key that is being referenced in confrelid
+- pk_column: the column of the primary key in confrelid that is being referenced
+
+## Detailed Instructions
+1. Install the rdb-to-semi PyPi package
+```bash
+pip install -i https://test.pypi.org/simple/ masdse203-rdb-to-semi
+```
+2. Import df_to_json
+```python
+from masdse203_rdb_to_semi.to_json import df_to_json
+```
+3. Different use cases:
+- If you have one dataframe to convert
+```python
+df1 = pd.read_csv('path_to.csv')
+df_to_json(df1)
+```
+- If you have two dataframes to convert include a schema csv
+```python
+df1 = pd.read_csv('path_to.csv')
+df2 = pd.read_csv("path_to_other.csv")
+schema = pd.read_csv('schema.csv') 
+df_to_json(df1, df2, db_schema=schema)
+```
 
 ## Local development instructions 
 
@@ -64,3 +87,4 @@ We should try to adhere to the [semantic versioning spec](https://semver.org/). 
 > MAJOR version when you make incompatible API changes
 > MINOR version when you add functionality in a backward compatible manner
 > PATCH version when you make backward compatible bug fixes
+
