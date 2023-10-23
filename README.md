@@ -31,9 +31,9 @@ If you're merging two tables together, you need to offer a schema in the form of
 | topics_fk_doc | topics   | document_id | documents | document_id |
 
 - conname: the name of the constraint (you can name this anything)
-- conrelid:  the name of the table the constraint is on (df1)
+- conrelid:  the name of the table the constraint is on
 - fk_column: the column of the foreign key in conrelid
-- confrelid: the name of the table being referenced (df2)
+- confrelid: the name of the table being referenced 
 - pk_column: the column of the primary key that is being referenced in confrelid
 
 ## Local development instructions 

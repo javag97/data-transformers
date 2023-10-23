@@ -26,8 +26,7 @@ def validate_schema_csv(schema):
         bool: True if the CSV is valid, False otherwise.
     """
     expected_columns = [
-        "conname", "conrelid", "conrelid_file", "fk_column",
-        "confrelid_file", "confrelid", "pk_column"
+        "conname", "conrelid", "fk_column", "confrelid", "pk_column"
     ]
 
     missing_columns = set(expected_columns) - set(schema.columns)
@@ -67,6 +66,9 @@ def df_to_json(*args, db_schema=None):
                 raise ValueError("No schema needed with one table.")
             results = args[0].to_json(orient='records')
             parsed = json.loads(results)
+            final = json.dumps(parsed)
+            with open("results.json", "w", encoding='utf-8') as outfile: #fix: write out to results folder
+                outfile.write(final)
             return parsed
     
     if db_schema is None:
