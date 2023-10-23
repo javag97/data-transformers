@@ -61,15 +61,14 @@ def df_to_json(*args, db_schema=None):
             raise ValueError("One of your dataframes is not valid.")
 
     if len(args) == 1:
-        if is_df(args[0]):
-            if db_schema is not None:
-                raise ValueError("No schema needed with one table.")
-            results = args[0].to_json(orient='records')
-            parsed = json.loads(results)
-            final = json.dumps(parsed)
-            with open("results.json", "w", encoding='utf-8') as outfile: #fix: write out to results folder
-                outfile.write(final)
-            return parsed
+        if db_schema is not None:
+            raise ValueError("No schema needed with one table.")
+        results = args[0].to_json(orient='records')
+        parsed = json.loads(results)
+        final = json.dumps(parsed)
+        with open("results.json", "w", encoding='utf-8') as outfile: #fix: write out to results folder
+            outfile.write(final)
+        return parsed
     
     if db_schema is None:
         raise ValueError("Expected a db_schema, but received None.")
@@ -109,5 +108,6 @@ def df_to_json(*args, db_schema=None):
             outfile.write(final)
         return final
     
+        # Transformations with more than two tables are not supported.
     return None
  
