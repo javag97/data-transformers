@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name='masdse203_rdb_to_semi',
-    version='0.1.3.alpha.1',
+    version='0.1.5',
     description='DSE 203 Relational to Semi Structured Transformation',
-    author='Javier Garcia, Brian Qian',
+    author='Javier Garcia, Brian Qian, Selamawit Damte',
     author_email='jag043@ucsd.edu',
     url='https://github.com/javag97/data-transformers/',
     packages=find_packages(where="src"),
