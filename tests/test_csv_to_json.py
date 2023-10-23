@@ -19,7 +19,7 @@ def test_invalid_input():
     with pytest.raises(ValueError):
         df_to_json('string')
 
-def test_simple_data_csv_df(one_table, one_table_result):
+def test_one_simple_data_csv_df(one_table, one_table_result):
     assert df_to_json(one_table) == one_table_result
 
 @pytest.fixture
@@ -61,15 +61,15 @@ def two_tables_result():
         data = json.load(json_file)
     return data
 
-def test_simple_data_csv_df(two_tables, two_tables_schema, two_tables_result):
+def test_two_simple_data_csv_df(two_tables, two_tables_schema, two_tables_result):
     df1, df2 = two_tables
-    result = json.loads(df_to_json(df1, df2, db_schema=two_tables_schema))
+    result = df_to_json(df1, df2, db_schema=two_tables_schema)
     assert result == two_tables_result
 
 @pytest.fixture
 def multiple_relations():
-    df1 = pd.read_csv('tests/data/two_tables_multiple_relations/courses.csv')
-    df2 = pd.read_csv("tests/data/two_tables_multiple_relations/students.csv")
+    df1 = pd.read_csv("tests/data/two_tables_multiple_relations/students.csv")
+    df2 = pd.read_csv('tests/data/two_tables_multiple_relations/courses.csv')
     return df1, df2
 
 @pytest.fixture

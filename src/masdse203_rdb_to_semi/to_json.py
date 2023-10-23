@@ -51,20 +51,21 @@ def df_to_json(*args, db_schema=None):
     
     Parameters:
         *args: One or more pandas DataFrames to convert.
-        db_schema (str): An optional parameter that could be used to customize the JSON structure based on SQL schema relationships.
+        db_schema (str): A parameter that could be used to customize the JSON structure based on SQL schema relationships. Not necessary for one table, but necessary for more. 
     
     Returns:
         list: A list containing the JSON representation of each DataFrame.
     """
     for df in args:
         if not is_df(df):
-            raise ValueError("One of your dataframes is not valid.")
+            raise ValueError("Expected dataframe, received something else.")
 
     if len(args) == 1:
         if db_schema is not None:
             raise ValueError("No schema needed with one table.")
         results = args[0].to_json(orient='records')
         parsed = json.loads(results)
+
         final = json.dumps(parsed)
         with open("results.json", "w", encoding='utf-8') as outfile: #fix: write out to results folder
             outfile.write(final)
@@ -78,35 +79,37 @@ def df_to_json(*args, db_schema=None):
     
     if len(args) == 2:
         df1, df2 = args
-        df1_name = db_schema['conrelid'][0] #name of table the constraint is on, foreign key
-        df2_name = db_schema['confrelid'][0] #name of refrenced table
+        schema_rows_len = db_schema.shape[0]
+        for i in range(schema_rows_len):
+            df1_name = db_schema['conrelid'][i] #name of table the constraint is on, foreign key
+            shared_column = db_schema['fk_column'][i] #name of the foreign key in one table
 
-        shared_column = db_schema['fk_column'][0] #name of the foreign key in one table
+            df1_columns = list(np.setdiff1d(df1.columns, [shared_column])) #columns in table besides shared column
+            df2_columns = list(np.setdiff1d(df2.columns, [shared_column]))
 
-        df1_columns = list(np.setdiff1d(df1.columns, [shared_column])) #columns in table besides shared column
-        df2_columns = list(np.setdiff1d(df2.columns, [shared_column]))
+            dup_col_name = np.intersect1d(df2_columns, df1_columns) #if both dataframes have columns with the same name that's not a foreign key
+            if len(dup_col_name) != 0:
+                for col in dup_col_name:
+                    df1 = df1.rename({col: col+'_x'}, axis=1) #renaming both columns
+                    df2 = df2.rename({col: col+'_y'}, axis=1)
+                    df1_columns = list(np.setdiff1d(df1.columns, [shared_column])) 
+                    df2_columns = list(np.setdiff1d(df2.columns, [shared_column]))
 
-        dup_col_name = np.intersect1d(df2_columns, df1_columns) #if both dataframes have columns with the same name that's not a foreign key
-        if len(dup_col_name) != 0:
-            for col in dup_col_name:
-                df1 = df1.rename({col: col+'_x'}, axis=1) #renaming both columns
-                df2 = df2.rename({col: col+'_y'}, axis=1)
-                df1_columns = list(np.setdiff1d(df1.columns, [shared_column])) 
-                df2_columns = list(np.setdiff1d(df2.columns, [shared_column]))
+            df1 = df1.merge(df2, on=shared_column)
 
-        df = df1.merge(df2, on=shared_column)  
         all_cols = [shared_column] + df2_columns 
-        temp = (df.groupby(all_cols)[df1_columns]
+        temp = (df1.groupby(all_cols)[df1_columns]
                 .apply(lambda x: x.to_dict('records'))
                 .reset_index(name = df1_name)
                 .to_json(orient='records')
                 )
         parsed = json.loads(temp)
+
+        return parsed
         
-        final = json.dumps({df2_name: parsed})
-        with open("results.json", "w", encoding='utf-8') as outfile: #fix: write out to results folder
-            outfile.write(final)
-        return final
+        # with open("results.json", "w", encoding='utf-8') as outfile: #fix: write out to results folder
+        #     outfile.write(final)
+        # return final
     
         # Transformations with more than two tables are not supported.
     return None
